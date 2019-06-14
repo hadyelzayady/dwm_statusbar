@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* interval between updates (in ms) */
-const unsigned int interval = 500;
+const unsigned int interval = 900;
 
 /* text to show if no value can be retrieved */
 static const char unknown_str[] = "n/a";
@@ -74,7 +74,7 @@ static const struct arg args[] = {
 	{ battery_state, "BAT:%s",          "BAT0" },
 	{ battery_perc, "%s",          "BAT0" },
 	{ battery_remaining, "|%s  ",          "BAT0" },
-	{ datetime, "%s ",           "%F %I:%M %p" },
-	{ keyboard_indicators, "%1s  ",           "n?"},
+	{ datetime, "%s ",           "%F %I:%M %p " },
+	{ keyboard_indicators, "<%1s>",           "n?"},
 	{ keymap, "%3s ",           NULL},
 };

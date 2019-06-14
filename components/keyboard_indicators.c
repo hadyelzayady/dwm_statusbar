@@ -42,6 +42,9 @@ keyboard_indicators(const char *fmt)
 		} else if (isset) {
 			buf[n++] = fmt[i];
 		}
+		else{
+			buf[n++]='_';
+		}
 	}
 	buf[n] = 0;
 	return buf;
