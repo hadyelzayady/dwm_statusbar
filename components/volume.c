@@ -7,70 +7,79 @@
 
 #include "../util.h"
 
-#if defined(__OpenBSD__)
-	#include <sys/audioio.h>
-
+#if !defined(__OpenBSD__)
+	FILE *fp;
+	char volume_percent[5]="n\\a\0";
 	const char *
 	vol_perc(const char *card)
 	{
-		static int cls = -1;
-		mixer_devinfo_t mdi;
-		mixer_ctrl_t mc;
-		int afd = -1, m = -1, v = -1;
+		fp=popen("amixer sget Master | awk -F\"[][]\" '/dB/ { print $2 }'","r");
+	        if(fp!=NULL)
+	        {
+	           fgets(volume_percent,4,fp);
+	           pclose(fp);
+	           	
+	        return volume_percent;
+	        }
+		return "n\\a";
+////////	static int cls = -1;
+////////	mixer_devinfo_t mdi;
+////////	mixer_ctrl_t mc;
+////////	int afd = -1, m = -1, v = -1;
 
-		if ((afd = open(card, O_RDONLY)) < 0) {
-			warn("open '%s':", card);
-			return NULL;
-		}
+////////	if ((afd = open(card, O_RDONLY)) < 0) {
+////////		warn("open '%s':", card);
+////////		return NULL;
+////////	}
 
-		for (mdi.index = 0; cls == -1; mdi.index++) {
-			if (ioctl(afd, AUDIO_MIXER_DEVINFO, &mdi) < 0) {
-				warn("ioctl 'AUDIO_MIXER_DEVINFO':");
-				close(afd);
-				return NULL;
-			}
-			if (mdi.type == AUDIO_MIXER_CLASS &&
-			    !strncmp(mdi.label.name,
-				     AudioCoutputs,
-				     MAX_AUDIO_DEV_LEN))
-				cls = mdi.index;
-			}
-		for (mdi.index = 0; v == -1 || m == -1; mdi.index++) {
-			if (ioctl(afd, AUDIO_MIXER_DEVINFO, &mdi) < 0) {
-				warn("ioctl 'AUDIO_MIXER_DEVINFO':");
-				close(afd);
-				return NULL;
-			}
-			if (mdi.mixer_class == cls &&
-			    ((mdi.type == AUDIO_MIXER_VALUE &&
-			      !strncmp(mdi.label.name,
-				       AudioNmaster,
-				       MAX_AUDIO_DEV_LEN)) ||
-			     (mdi.type == AUDIO_MIXER_ENUM &&
-			      !strncmp(mdi.label.name,
-				      AudioNmute,
-				      MAX_AUDIO_DEV_LEN)))) {
-				mc.dev = mdi.index, mc.type = mdi.type;
-				if (ioctl(afd, AUDIO_MIXER_READ, &mc) < 0) {
-					warn("ioctl 'AUDIO_MIXER_READ':");
-					close(afd);
-					return NULL;
-				}
-				if (mc.type == AUDIO_MIXER_VALUE)
-					v = mc.un.value.num_channels == 1 ?
-					    mc.un.value.level[AUDIO_MIXER_LEVEL_MONO] :
-					    (mc.un.value.level[AUDIO_MIXER_LEVEL_LEFT] >
-					     mc.un.value.level[AUDIO_MIXER_LEVEL_RIGHT] ?
-					     mc.un.value.level[AUDIO_MIXER_LEVEL_LEFT] :
-					     mc.un.value.level[AUDIO_MIXER_LEVEL_RIGHT]);
-				else if (mc.type == AUDIO_MIXER_ENUM)
-					m = mc.un.ord;
-			}
-		}
+////////	for (mdi.index = 0; cls == -1; mdi.index++) {
+////////		if (ioctl(afd, AUDIO_MIXER_DEVINFO, &mdi) < 0) {
+////////			warn("ioctl 'AUDIO_MIXER_DEVINFO':");
+////////			close(afd);
+////////			return NULL;
+////////		}
+////////		if (mdi.type == AUDIO_MIXER_CLASS &&
+////////		    !strncmp(mdi.label.name,
+////////			     AudioCoutputs,
+////////			     MAX_AUDIO_DEV_LEN))
+////////			cls = mdi.index;
+////////		}
+////////	for (mdi.index = 0; v == -1 || m == -1; mdi.index++) {
+////////		if (ioctl(afd, AUDIO_MIXER_DEVINFO, &mdi) < 0) {
+////////			warn("ioctl 'AUDIO_MIXER_DEVINFO':");
+////////			close(afd);
+////////			return NULL;
+////////		}
+////////		if (mdi.mixer_class == cls &&
+////////		    ((mdi.type == AUDIO_MIXER_VALUE &&
+////////		      !strncmp(mdi.label.name,
+////////			       AudioNmaster,
+////////			       MAX_AUDIO_DEV_LEN)) ||
+////////		     (mdi.type == AUDIO_MIXER_ENUM &&
+////////		      !strncmp(mdi.label.name,
+////////			      AudioNmute,
+////////			      MAX_AUDIO_DEV_LEN)))) {
+////////			mc.dev = mdi.index, mc.type = mdi.type;
+////////			if (ioctl(afd, AUDIO_MIXER_READ, &mc) < 0) {
+////////				warn("ioctl 'AUDIO_MIXER_READ':");
+////////				close(afd);
+////////				return NULL;
+////////			}
+////////			if (mc.type == AUDIO_MIXER_VALUE)
+////////				v = mc.un.value.num_channels == 1 ?
+////////				    mc.un.value.level[AUDIO_MIXER_LEVEL_MONO] :
+////////				    (mc.un.value.level[AUDIO_MIXER_LEVEL_LEFT] >
+////////				     mc.un.value.level[AUDIO_MIXER_LEVEL_RIGHT] ?
+////////				     mc.un.value.level[AUDIO_MIXER_LEVEL_LEFT] :
+////////				     mc.un.value.level[AUDIO_MIXER_LEVEL_RIGHT]);
+////////			else if (mc.type == AUDIO_MIXER_ENUM)
+////////				m = mc.un.ord;
+////////		}
+////////	}
 
-		close(afd);
+////////	close(afd);
 
-		return bprintf("%d", m ? 0 : v * 100 / 255);
+////////	return bprintf("%d", m ? 0 : v * 100 / 255);
 	}
 #else
 	#include <sys/soundcard.h>

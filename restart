@@ -1,0 +1,4 @@
+#!/bin/sh
+sudo killall slstatus
+sudo make clean install
+sudo slstatus&
