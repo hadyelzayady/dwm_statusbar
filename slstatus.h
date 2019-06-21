@@ -74,8 +74,10 @@ const char *username(void);
 const char *uid(void);
 
 /* volume */
-const char *vol_perc(const char *card);
+const char *vol_perc();
 
+/* brightness */
+const char *brightness_perc();
 /* wifi */
 const char *wifi_perc(const char *interface);
 const char *wifi_essid(const char *interface);

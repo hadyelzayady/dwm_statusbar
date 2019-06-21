@@ -26,8 +26,8 @@ COM =\
 	components/uptime\
 	components/user\
 	components/volume\
-	components/wifi
-
+	components/wifi\
+	components/brightness
 all: slstatus
 
 $(COM:=.o): config.mk $(REQ:=.h)
