@@ -138,7 +138,7 @@ battery(const char *bat)
 		if(perc <15)
 			color="\x04\0";
 		else
-			color="\x02\0";
+			color="\x05\0";
 	}
 	return bprintf("%sBAT:%1s%d|%s",color,state,perc,remaining);
 }

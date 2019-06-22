@@ -70,10 +70,10 @@ static const struct arg args[] = {
 	{ vol_perc, "🔊%3s  ",       NULL },
 	{ wifi_essid, "WIFI:%s ",          "wlp8s0" },
 	{ wifi_perc, "%s%  ",          "wlp8s0" },
-	{ ram_perc, "RAM:%3s%  ",          NULL },
+	{ ram_perc, "\x02RAM:%3s%  ",          NULL },
 	{ cpu_perc, "CPU:%3s%  ",          NULL },
 	{ battery, "%s  ",          "BAT0" },
-	{ datetime, "%s ",           "%F %I:%M %p " },
+	{ datetime, "\x06%s  ",           "%F(%a) %I:%M %p" },
 	{ keyboard_indicators, "<%1s>",           "n?"},
-	{ keymap, "%3s ",           NULL},
+	{ keymap, "%3s",           NULL},
 };
