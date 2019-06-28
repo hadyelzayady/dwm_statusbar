@@ -3,7 +3,7 @@
 #include <string.h>
 
 #include "../util.h"
-
+#include <stdlib.h>
 #include <limits.h>
 #include <stdint.h>
 #include <unistd.h>
@@ -115,7 +115,8 @@ battery_remaining(const char *bat)
 
 	return "";
 }
-
+int notified1=0;
+int notified2=0;
 const char *
 battery(const char *bat)
 {
@@ -136,9 +137,27 @@ battery(const char *bat)
 	if(strcmp(state, "-")==0)
 	{
 		if(perc <15)
+		{
 			color="\x04\0";
+			if(notified1==0)
+			{
+			system("lowbatterynotify");
+			notified1=1;
+			}
+			else if (perc <6 && notified2==0){
+				system("lowbatterynotify");
+				notified2=1;
+				if(perc<3)
+					system("systemctl hybrid-sleep");
+			}
+		}
+
 		else
 			color="\x05\0";
+	}else{
+		notified1=0;
+		notified2=0;
+
 	}
-	return bprintf("%sBAT:%1s%d|%s",color,state,perc,remaining);
+	return bprintf("%sB:%1s%d|%s",color,state,perc,remaining);
 }
