@@ -109,7 +109,7 @@ battery_remaining(const char *bat)
 		h = timeleft;
 		m = (timeleft - (double)h) * 60;
 		static char remaining[6];
-		sprintf(remaining, "%juh %jum", h,m);
+		sprintf(remaining, "%ju:%ju", h,m);
 		return remaining;
 	}
 

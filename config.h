@@ -74,6 +74,6 @@ static const struct arg args[] = {
 	{ cpu_perc, "C:%s%  ",          NULL },
 	{ battery, "%s  ",          "BAT0" },
 	{ datetime, "\x06%s  ",           "%y-%m-%d(%a) %H:%M" },
-	{ keyboard_indicators, "<%1s>",           "n?"},
+	{ keyboard_indicators, "\x08<%1s>",           "n?"},
 	{ keymap, "%3s",           NULL},
 };
