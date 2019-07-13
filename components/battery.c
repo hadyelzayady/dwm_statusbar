@@ -154,10 +154,12 @@ battery(const char *bat)
 
 		else
 			color="\x05\0";
+
+		return bprintf("%sB:%1s%d|%s",color,state,perc,remaining);
 	}else{
 		notified1=0;
 		notified2=0;
 
+		return bprintf("%sB:%1s%d",color,state,perc);
 	}
-	return bprintf("%sB:%1s%d|%s",color,state,perc,remaining);
 }
