@@ -66,7 +66,7 @@ static const char unknown_str[] = "n/a";
 static const struct arg args[] = {
 	/* function format          argument */
 		
-	{ brightness_perc, "\x07 BR:%s  ",      NULL },
+	{ brightness_perc, "\x07\x42R:%s  ",      NULL },
 	{ vol_perc, "🔊%3s  ",       NULL },
 	{ wifi_essid, "W:%s|",          "wlp8s0" },
 	{ wifi_perc, "%s%  ",          "wlp8s0" },
