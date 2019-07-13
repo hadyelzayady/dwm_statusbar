@@ -67,8 +67,8 @@ static const struct arg args[] = {
 	/* function format          argument */
 		
 	{ brightness_perc, "\x07\x42R:%s%% ",      NULL },
-	{ vol_perc, "🔊%3s ",       NULL },
-	{ wifi_essid, "W:%s|",          "wlp8s0" },
+	{ vol_perc, "\x09🔊%3s ",       NULL },
+	{ wifi_essid, "\x0AW:%s|",          "wlp8s0" },
 	{ wifi_perc, "%s%% ",          "wlp8s0" },
 	{ ram_perc, "\x02R:%s%%|",          NULL },
 	{ cpu_perc, "C:%s%% ",          NULL },
