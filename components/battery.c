@@ -160,6 +160,6 @@ battery(const char *bat)
 		notified1=0;
 		notified2=0;
 
-		return bprintf("%sB:%1s%d",color,state,perc);
+		return bprintf("%s B:%1s%d",color,state,perc);
 	}
 }
