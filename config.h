@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* interval between updates (in ms) */
-const unsigned int interval = 900;
+const unsigned int interval = 500;
 
 /* text to show if no value can be retrieved */
 static const char unknown_str[] = "n/a";
@@ -68,8 +68,8 @@ static const struct arg args[] = {
 		
 	{ brightness_perc, "\x07 \x42R:%s%% ",      NULL },
 	{ vol_perc, "\x09 🔊%3s ",       NULL },
-	{ wifi_essid, "\x0A W:%s|",          "wlp8s0" },
-	{ wifi_perc, "%s%% ",          "wlp8s0" },
+//	{ wifi_essid, "\x0A W:%s|",          "wlp8s0" },
+//	{ wifi_perc, "%s%% ",          "wlp8s0" },
 	{ ram_perc, "\x02 R:%s%%|",          NULL },
 	{ cpu_perc, "C:%s%% ",          NULL },
 	{ battery, "%s ",          "BAT0" },

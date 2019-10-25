@@ -141,14 +141,14 @@ battery(const char *bat)
 			color="\x04\0";
 			if(notified1==0)
 			{
-			system("lowbatterynotify");
+			//system("lowbatterynotify");
 			notified1=1;
 			}
 			else if (perc <6 && notified2==0){
-				system("lowbatterynotify");
+				//system("lowbatterynotify");
 				notified2=1;
-				if(perc<3)
-					system("systemctl hybrid-sleep");
+			//	if(perc<3)
+					//system("systemctl hybrid-sleep");
 			}
 		}
 
