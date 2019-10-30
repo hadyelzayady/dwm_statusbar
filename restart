@@ -1,4 +1,4 @@
 #!/bin/sh
-sudo killall slstatus
+pkill slstatus
 sudo make clean install
-slstatus&
+slstatus
